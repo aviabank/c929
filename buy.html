@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>COMAC C929 (¥C929) — Buy with Card, SWIFT, SEPA</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0A0E27; color: #E0E6FF;
+            line-height: 1.6; padding-top: 80px; padding-bottom: 60px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        .glass-card {
+            background: rgba(26, 30, 65, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 24px;
+            padding: 40px; margin-bottom: 24px;
+        }
+        .glass-card h1 { font-size: 32px; margin-bottom: 8px; }
+        .glass-card h1 .highlight { color: #E5486A; }
+        .glass-card .sub { color: #8A94C8; margin-bottom: 24px; }
+        .method-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+        .method-card {
+            background: rgba(26,30,65,0.3); border: 1px solid #1E2350;
+            border-radius: 16px; padding: 20px 16px; text-align: center;
+            transition: 0.3s; text-decoration: none; color: #E0E6FF;
+        }
+        .method-card:hover { border-color: #E5486A; transform: translateY(-4px); }
+        .method-card .icon { font-size: 32px; display: block; margin-bottom: 8px; }
+        .method-card .name { font-weight: 600; }
+        .method-card .desc { font-size: 13px; color: #5A649A; }
+        .contract-box {
+            background: rgba(229,72,106,0.05); border: 1px solid rgba(229,72,106,0.15);
+            border-radius: 12px; padding: 16px; margin: 20px 0;
+            text-align: center; font-size: 13px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .contract-box .addr { color: #E5486A; }
+        .contract-box .copy-btn { background: transparent; border: none; color: #5A649A; cursor: pointer; font-size: 13px; font-family: 'Segoe UI', sans-serif; }
+        .contract-box .copy-btn:hover { color: #E5486A; }
+        .contract-box .solscan-link { color: #5A649A; text-decoration: none; font-size: 13px; font-family: 'Segoe UI', sans-serif; margin-left: 8px; }
+        .contract-box .solscan-link:hover { color: #fff; }
+        .back-link { display: inline-block; margin-top: 20px; color: #E5486A; text-decoration: none; font-weight: 500; }
+        .back-link:hover { text-decoration: underline; }
+        .logo-img { height: 60px; width: auto; margin-bottom: 20px; border-radius: 50%; }
+        .counter-box {
+            text-align: center; padding: 16px;
+            background: rgba(229,72,106,0.05); border-radius: 12px;
+            margin: 20px 0; font-size: 14px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .counter-box .counter-visitors { color: #E5486A; font-weight: 600; }
+        .counter-box .counter-holders { color: #2ECC40; font-weight: 600; }
+        .counter-box .counter-clients { color: #4A8CFF; font-weight: 600; }
+        @media (max-width: 700px) { .method-grid { grid-template-columns: 1fr 1fr; } .glass-card { padding: 24px; } }
+        @media (max-width: 450px) { .method-grid { grid-template-columns: 1fr; } .contract-box { font-size: 11px; } }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-card">
+        <img src="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" alt="COMAC C929" class="logo-img" />
+        <h1>Buy <span class="highlight">COMAC C929 (¥C929)</span></h1>
+        <p class="sub">Choose your preferred payment method</p>
+
+        <div class="method-grid">
+            <a href="https://opensea.io/token/solana/C929ContractAddressHere" target="_blank" class="method-card">
+                <span class="icon">💳</span>
+                <span class="name">Card (Visa/MC)</span>
+                <span class="desc">via OpenSea • Instant</span>
+            </a>
+            <a href="https://jup.ag/swap/SOL-C929ContractAddressHere" target="_blank" class="method-card">
+                <span class="icon">🔄</span>
+                <span class="name">Jupiter Swap</span>
+                <span class="desc">Any crypto → C929</span>
+            </a>
+            <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank" class="method-card">
+                <span class="icon">🔍</span>
+                <span class="name">Solscan</span>
+                <span class="desc">Check contract</span>
+            </a>
+            <a href="https://www.binance.com/" target="_blank" class="method-card">
+                <span class="icon">🏦</span>
+                <span class="name">SWIFT</span>
+                <span class="desc">International wire • Binance</span>
+            </a>
+            <a href="https://www.okx.com/" target="_blank" class="method-card">
+                <span class="icon">🇪🇺</span>
+                <span class="name">SEPA</span>
+                <span class="desc">EU bank transfer • OKX</span>
+            </a>
+            <a href="https://www.binance.com/en/convert" target="_blank" class="method-card">
+                <span class="icon">💱</span>
+                <span class="name">POS / Convert</span>
+                <span class="desc">Fiat → C929</span>
+            </a>
+            <a href="https://www.okx.com/" target="_blank" class="method-card">
+                <span class="icon">🇨🇳</span>
+                <span class="name">CIPS</span>
+                <span class="desc">China cross-border • OKX</span>
+            </a>
+            <a href="https://www.kraken.com/" target="_blank" class="method-card">
+                <span class="icon">🇺🇸</span>
+                <span class="name">Fedwire / CHIPS</span>
+                <span class="desc">USD wire • Kraken</span>
+            </a>
+            <a href="https://www.binance.com/" target="_blank" class="method-card">
+                <span class="icon">🌍</span>
+                <span class="name">BUNA / UPI / PIX</span>
+                <span class="desc">Arab, India, Brazil rails</span>
+            </a>
+        </div>
+
+        <div class="counter-box">
+            ✈️ <span class="counter-visitors">2030</span> first flight
+            &nbsp;·&nbsp;
+            📦 <span class="counter-holders">2035</span> commercial
+            &nbsp;·&nbsp;
+            🔧 <span class="counter-clients">5000+</span> parts
+        </div>
+
+        <div class="contract-box">
+            📜 Contract: <span class="addr">C929ContractAddressHere</span>
+            <button onclick="navigator.clipboard.writeText('C929ContractAddressHere')" class="copy-btn">📋 Copy</button>
+            <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank" class="solscan-link">🔍 Solscan</a>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to COMAC C929 Home</a>
+    </div>
+</div>
+
+<script src="counter.js"></script>
+
+</body>
+</html>
