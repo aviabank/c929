@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>COMAC C929 (¥C929) — The Horizon Asset | AviaTrust</title>
+    <meta name="description" content="COMAC C929 — the horizon asset of AviaTrust. First flight ~2030, commercial ~2035. Aircraft sales, leasing, 5000+ parts. ¥0.01 → 100× to ¥1.00." />
+    <link rel="icon" href="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0A0E27; color: #E0E6FF;
+            line-height: 1.6; overflow-x: hidden;
+            padding-top: 130px; padding-bottom: 60px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .ticker {
+            position: fixed; left: 0; width: 100%; z-index: 1000;
+            background: rgba(10, 14, 39, 0.95);
+            border-top: 1px solid #1E2350; border-bottom: 1px solid #1E2350;
+            overflow: hidden; padding: 6px 0; backdrop-filter: blur(8px);
+        }
+        .ticker-top { top: 0; border-bottom: 1px solid rgba(229,72,106,0.4); }
+        .ticker-bottom { bottom: 0; border-top: 1px solid rgba(229,72,106,0.4); }
+        .ticker-track {
+            display: flex; white-space: nowrap;
+            animation: tickerScroll 45s linear infinite; width: max-content;
+        }
+        .ticker-track span {
+            margin: 0 30px; font-size: 13px; color: #8A94C8;
+            letter-spacing: 0.5px; flex-shrink: 0;
+        }
+        .ticker-track .highlight-ticker { color: #E5486A; font-weight: 600; }
+        .ticker-track .contract-ticker {
+            font-family: 'Courier New', monospace; color: #E5486A;
+            background: rgba(229,72,106,0.08); padding: 2px 8px;
+            border-radius: 4px; font-size: 11px;
+        }
+        @keyframes tickerScroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .ticker-bottom .ticker-track { animation-duration: 38s; }
+
+        header {
+            position: fixed; top: 36px; left: 0; width: 100%;
+            background: rgba(10, 14, 39, 0.92); backdrop-filter: blur(12px);
+            z-index: 900; border-bottom: 1px solid rgba(229,72,106,0.2);
+            padding: 8px 0;
+        }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 8px;
+        }
+        .logo { display: flex; align-items: center; gap: 8px; }
+        .logo img { height: 40px; width: auto; border-radius: 50%; }
+        .logo-text { font-size: 20px; font-weight: 700; color: #fff; }
+        .logo-badge {
+            font-size: 9px; background: #E5486A; color: #0A0E27;
+            padding: 2px 10px; border-radius: 20px; font-weight: 600;
+            text-transform: uppercase;
+        }
+        .header-contract {
+            font-size: 10px; color: #5A649A;
+            background: rgba(26,30,65,0.5); padding: 4px 12px;
+            border-radius: 20px; border: 1px solid #1E2350;
+            display: inline-flex; align-items: center; gap: 6px;
+            font-family: 'Courier New', monospace;
+        }
+        .header-contract .addr { color: #E0E6FF; letter-spacing: 0.3px; }
+        .header-contract .copy-btn { background: transparent; border: none; color: #5A649A; cursor: pointer; font-size: 11px; }
+        .header-contract .copy-btn:hover { color: #E5486A; }
+        .header-contract .solscan-link { color: #5A649A; text-decoration: none; font-size: 11px; }
+        .header-contract .solscan-link:hover { color: #E5486A; }
+
+        nav { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        nav a { color: #8A94C8; text-decoration: none; font-size: 12px; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #E5486A; }
+        nav a.active { color: #E5486A; border-bottom: 2px solid #E5486A; }
+
+        .btn-primary {
+            background: #E5486A; color: #0A0E27; padding: 6px 18px;
+            border-radius: 30px; font-weight: 700; text-decoration: none;
+            transition: 0.3s; border: none; cursor: pointer; display: inline-block;
+            font-size: 13px;
+        }
+        .btn-primary:hover { background: #F06585; transform: scale(1.02); box-shadow: 0 0 25px rgba(229,72,106,0.4); }
+        .btn-secondary {
+            background: transparent; color: #E5486A; padding: 6px 18px;
+            border-radius: 30px; font-weight: 600; text-decoration: none;
+            border: 1px solid #E5486A; transition: 0.3s; display: inline-block; font-size: 13px;
+        }
+        .btn-secondary:hover { background: #E5486A; color: #0A0E27; }
+        .btn-outline {
+            background: transparent; color: #8A94C8; padding: 6px 18px;
+            border-radius: 30px; font-weight: 500; text-decoration: none;
+            border: 1px solid #2A2F5A; transition: 0.3s; display: inline-block; font-size: 13px;
+        }
+        .btn-outline:hover { border-color: #E5486A; color: #fff; }
+        .btn-glass {
+            background: rgba(229,72,106, 0.08); backdrop-filter: blur(10px);
+            color: #E5486A; padding: 6px 18px; border-radius: 30px;
+            font-weight: 600; text-decoration: none; border: 1px solid rgba(229,72,106,0.2);
+            transition: 0.3s; display: inline-block; font-size: 13px;
+        }
+        .btn-glass:hover { background: rgba(229,72,106,0.2); border-color: #E5486A; }
+
+        .hero {
+            padding: 20px 0 40px; position: relative; z-index: 1;
+            min-height: 70vh; display: flex; align-items: center;
+            background-image: url('c929_hero_bg.png');
+            background-size: cover; background-position: center; background-attachment: fixed;
+        }
+        .hero::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(10,14,39,0.92) 0%, rgba(229,72,106,0.15) 100%);
+            z-index: -1;
+        }
+        .hero-inner { display: flex; align-items: center; gap: 40px; position: relative; z-index: 1; }
+        .hero-content { flex: 1; }
+        .hero-tag {
+            display: inline-block; background: rgba(229,72,106,0.15);
+            color: #E5486A; padding: 4px 16px; border-radius: 20px;
+            font-size: 13px; font-weight: 500; letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+        .hero h1 {
+            font-size: 44px; font-weight: 800; line-height: 1.1; margin-bottom: 16px;
+            background: linear-gradient(135deg, #fff 40%, #E5486A 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero h1 .highlight { color: #E5486A; -webkit-text-fill-color: #E5486A; }
+        .hero .plane-icon {
+            display: block; font-size: 28px; color: #E5486A;
+            margin-bottom: 12px;
+        }
+        .hero p { font-size: 17px; color: #E0E6FF; max-width: 500px; margin-bottom: 20px; }
+        .hero-stats { display: flex; gap: 30px; margin-bottom: 20px; flex-wrap: wrap; }
+        .stat-number { display: block; font-size: 24px; font-weight: 700; color: #fff; }
+        .stat-label { font-size: 12px; color: #8A94C8; }
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .contract-hero {
+            margin-top: 16px; padding: 8px 16px;
+            background: rgba(26,30,65,0.6); border-radius: 12px;
+            border: 1px solid #1E2350;
+            display: inline-flex; align-items: center; gap: 10px;
+            flex-wrap: wrap; font-size: 12px;
+            font-family: 'Courier New', monospace;
+        }
+        .contract-hero .label { color: #5A649A; font-family: 'Segoe UI', sans-serif; }
+        .contract-hero .addr { color: #E5486A; }
+        .contract-hero .copy-btn {
+            background: rgba(229,72,106,0.08); border: 1px solid rgba(229,72,106,0.15);
+            color: #E5486A; padding: 2px 12px; border-radius: 16px;
+            cursor: pointer; font-size: 11px; transition: 0.2s; font-family: 'Segoe UI', sans-serif;
+        }
+        .contract-hero .copy-btn:hover { background: rgba(229,72,106,0.2); }
+        .contract-hero .solscan-link {
+            color: #5A649A; text-decoration: none; font-size: 11px; font-family: 'Segoe UI', sans-serif;
+        }
+        .contract-hero .solscan-link:hover { color: #fff; }
+
+        .hero-visual { flex: 0 0 220px; text-align: center; }
+        .hero-coin {
+            width: 220px; height: 220px; border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 0 80px rgba(229,72,106,0.5), 0 0 120px rgba(229,72,106,0.3);
+            animation: floatCoin 4s ease-in-out infinite;
+        }
+        @keyframes floatCoin {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(5deg); }
+        }
+
+        .video-section { padding: 60px 0; position: relative; z-index: 1; }
+        .video-wrapper {
+            max-width: 900px; margin: 0 auto;
+            border-radius: 20px; overflow: hidden;
+            border: 2px solid rgba(229,72,106,0.3);
+            box-shadow: 0 20px 60px rgba(229,72,106,0.2);
+            transition: 0.3s;
+        }
+        .video-wrapper:hover {
+            box-shadow: 0 20px 80px rgba(229,72,106,0.4);
+            transform: translateY(-4px); border-color: #E5486A;
+        }
+        .video-wrapper video { width: 100%; display: block; }
+
+        .quick-buy {
+            max-width: 700px; margin: 0 auto 30px;
+            background: rgba(26, 30, 65, 0.5); border: 1px solid #1E2350;
+            border-radius: 20px; padding: 24px 32px;
+            backdrop-filter: blur(12px); text-align: center;
+        }
+        .quick-buy h2 { font-size: 26px; margin-bottom: 6px; }
+        .quick-buy h2 .highlight { color: #E5486A; }
+        .quick-buy .sub { color: #8A94C8; margin-bottom: 18px; font-size: 14px; }
+        .buy-amount-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+        .buy-amount-btn {
+            background: rgba(26, 30, 65, 0.6); border: 1px solid #1E2350;
+            border-radius: 12px; padding: 12px 6px;
+            color: #E0E6FF; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: 0.3s;
+        }
+        .buy-amount-btn:hover, .buy-amount-btn.active {
+            border-color: #E5486A; background: rgba(229,72,106,0.15); color: #E5486A;
+        }
+        .buy-amount-btn small { display: block; font-size: 10px; font-weight: 400; color: #5A649A; margin-top: 2px; }
+        .buy-amount-btn.active small { color: #E5486A; }
+        .buy-custom-row { display: flex; gap: 8px; margin-bottom: 16px; }
+        .buy-custom-row input {
+            flex: 1; padding: 10px 14px; border-radius: 12px;
+            border: 1px solid #1E2350; background: #060920;
+            color: #fff; font-size: 15px; outline: none; min-width: 0;
+        }
+        .buy-custom-row input:focus { border-color: #E5486A; }
+        .buy-custom-row input::placeholder { color: #3A406A; }
+        .buy-total {
+            background: rgba(0,0,0,0.3); border-radius: 12px;
+            padding: 10px; margin-bottom: 16px; font-size: 14px; color: #8A94C8;
+        }
+        .buy-total strong { color: #fff; font-size: 18px; }
+        .buy-links-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+        .buy-links-grid a {
+            background: rgba(229,72,106,0.08); border: 1px solid #1E2350;
+            border-radius: 12px; padding: 10px 6px; color: #8A94C8;
+            text-decoration: none; font-size: 11px; transition: 0.3s; text-align: center;
+        }
+        .buy-links-grid a:hover { border-color: #E5486A; color: #E5486A; background: rgba(229,72,106,0.05); }
+        .buy-links-grid a .icon { display: block; font-size: 18px; margin-bottom: 2px; }
+
+        section { padding: 60px 0; position: relative; z-index: 1; }
+        .section-header { text-align: center; margin-bottom: 40px; }
+        .section-tag {
+            display: inline-block; background: rgba(229,72,106,0.12);
+            color: #E5486A; padding: 4px 16px; border-radius: 20px;
+            font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;
+        }
+        .section-header h2 { font-size: 32px; font-weight: 700; margin: 8px 0; }
+        .section-header h2 .highlight { color: #E5486A; }
+        .section-header p { color: #8A94C8; max-width: 600px; margin: 0 auto; font-size: 15px; }
+
+        .glass-card {
+            background: rgba(26, 30, 65, 0.35); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 20px;
+            padding: 24px 24px; transition: 0.4s;
+        }
+        .glass-card:hover { border-color: rgba(229,72,106,0.2); transform: translateY(-4px); }
+
+        .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+        .about-card { text-align: center; padding: 20px; }
+        .about-icon { font-size: 32px; margin-bottom: 8px; }
+        .about-card h3 { font-size: 17px; margin-bottom: 6px; color: #fff; }
+        .about-card p { font-size: 13px; color: #8A94C8; }
+
+        .rwa-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .rwa-card {
+            background: rgba(26,30,65,0.4); border: 1px solid #1E2350;
+            border-radius: 16px; padding: 20px 18px; text-align: center; transition: 0.3s;
+        }
+        .rwa-card:hover { border-color: #E5486A; transform: translateY(-4px); }
+        .rwa-card .rwa-icon { font-size: 28px; margin-bottom: 6px; }
+        .rwa-card h4 { color: #fff; font-size: 15px; }
+        .rwa-card p { color: #8A94C8; font-size: 12px; margin-top: 4px; }
+
+        .image-block { max-width: 900px; margin: 30px auto; text-align: center; }
+        .image-block img {
+            max-width: 100%; border-radius: 20px;
+            border: 1px solid #1E2350;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        footer {
+            background: #060920; padding: 30px 0 16px; position: relative; z-index: 1;
+            border-top: 1px solid #1E2350; margin-bottom: 40px;
+        }
+        .footer-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+        .footer-brand { display: flex; align-items: center; gap: 8px; }
+        .footer-brand img { height: 32px; width: auto; border-radius: 50%; }
+        .footer-brand .logo-text { font-size: 16px; }
+        .footer-brand p { font-size: 11px; color: #5A649A; margin-top: 2px; }
+        .footer-links { display: flex; gap: 12px; flex-wrap: wrap; }
+        .footer-links a { color: #8A94C8; text-decoration: none; font-size: 12px; }
+        .footer-links a:hover { color: #E5486A; }
+        .footer-social { display: flex; gap: 10px; }
+        .footer-social a { color: #8A94C8; text-decoration: none; font-size: 16px; }
+        .footer-social a:hover { color: #E5486A; }
+
+        .footer-counter {
+            text-align: center; padding: 12px 0;
+            border-top: 1px solid #1E2350; margin-top: 12px;
+            font-size: 13px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .footer-counter .counter-visitors { color: #E5486A; font-weight: 600; }
+        .footer-counter .counter-holders { color: #2ECC40; font-weight: 600; }
+        .footer-counter .counter-clients { color: #4A8CFF; font-weight: 600; }
+        .footer-counter .time { font-size: 10px; color: #3A406A; }
+
+        .footer-contract {
+            text-align: center; padding: 10px 0;
+            border-top: 1px solid #1E2350; margin-top: 12px;
+            font-size: 12px; color: #5A649A;
+            display: flex; align-items: center; justify-content: center;
+            gap: 8px; flex-wrap: wrap; font-family: 'Courier New', monospace;
+        }
+        .footer-contract .addr { color: #E5486A; }
+        .footer-contract .copy-btn { background: transparent; border: none; color: #5A649A; cursor: pointer; font-size: 12px; font-family: 'Segoe UI', sans-serif; }
+        .footer-contract .copy-btn:hover { color: #E5486A; }
+        .footer-contract .solscan-link { color: #5A649A; text-decoration: none; font-size: 12px; font-family: 'Segoe UI', sans-serif; }
+        .footer-contract .solscan-link:hover { color: #fff; }
+        .footer-bottom { text-align: center; padding-top: 12px; border-top: 1px solid #1E2350; margin-top: 12px; font-size: 11px; color: #3A406A; }
+
+        @media (max-width: 768px) {
+            body { padding-top: 180px; }
+            header { top: 34px; padding: 6px 0; }
+            .header-inner { flex-direction: column; align-items: stretch; }
+            .header-contract { font-size: 9px; padding: 2px 8px; justify-content: center; }
+            nav { justify-content: center; gap: 6px; }
+            nav a { font-size: 10px; }
+            .hero { padding: 10px 0 30px; background-attachment: scroll; }
+            .hero-inner { flex-direction: column; text-align: center; }
+            .hero h1 { font-size: 30px; }
+            .hero-stats { justify-content: center; gap: 14px; }
+            .hero-actions { justify-content: center; }
+            .contract-hero { justify-content: center; font-size: 10px; }
+            .hero-visual { flex: 0 0 150px; }
+            .hero-coin { width: 150px; height: 150px; }
+            .quick-buy { padding: 16px; }
+            .buy-amount-grid { grid-template-columns: repeat(2, 1fr); }
+            .buy-links-grid { grid-template-columns: 1fr 1fr; }
+            .buy-custom-row { flex-direction: column; }
+            section { padding: 30px 0; }
+            .footer-inner { flex-direction: column; text-align: center; }
+            .footer-contract { font-size: 10px; flex-direction: column; gap: 4px; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 24px; }
+            .hero-stats { gap: 8px; }
+            .stat-number { font-size: 16px; }
+            .buy-amount-grid { grid-template-columns: 1fr 1fr; }
+            .buy-links-grid { grid-template-columns: 1fr; }
+            .header-contract { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="ticker ticker-top">
+    <div class="ticker-track">
+        <span>✈️ <span class="highlight-ticker">COMAC C929 (¥C929)</span> — The Horizon Asset • AviaTrust • Solana</span>
+        <span>✦ Contract: <span class="contract-ticker">C929ContractAddressHere</span></span>
+        <span>✦ <span class="highlight-ticker">¥0.01</span> → 100× to ¥1.00</span>
+        <span>✦ 1,000,000,000 Supply • 365 Days Lock</span>
+        <span>✦ First Flight ~2030 • Commercial ~2035</span>
+        <span>✦ SWIFT • SEPA • POS • Leasing • Aircraft Sales</span>
+        <span>✈️ <span class="highlight-ticker">COMAC C929 (¥C929)</span> — The Horizon Asset • AviaTrust • Solana</span>
+        <span>✦ Contract: <span class="contract-ticker">C929ContractAddressHere</span></span>
+        <span>✦ <span class="highlight-ticker">¥0.01</span> → 100× to ¥1.00</span>
+        <span>✦ 1,000,000,000 Supply • 365 Days Lock</span>
+        <span>✦ First Flight ~2030 • Commercial ~2035</span>
+        <span>✦ SWIFT • SEPA • POS • Leasing • Aircraft Sales</span>
+    </div>
+</div>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" alt="COMAC C929 Logo" />
+            <span class="logo-text">COMAC C929</span>
+            <span class="logo-badge">¥C929</span>
+        </div>
+        <div class="header-contract">
+            📜 <span class="addr">C929ContractAddressHere</span>
+            <button onclick="navigator.clipboard.writeText('C929ContractAddressHere')" class="copy-btn">📋</button>
+            <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank" class="solscan-link">🔍</a>
+        </div>
+        <nav>
+            <a href="https://123tokens.github.io/aviatrust/">AviaTrust</a>
+            <a href="index.html" class="active">¥C929</a>
+            <a href="buy.html">Buy</a>
+            <a href="trade.html">Trade</a>
+            <a href="fintech2.html">Leasing</a>
+        </nav>
+        <a href="buy.html" class="btn-primary">Buy ¥C929</a>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container hero-inner">
+        <div class="hero-content">
+            <div class="hero-tag">✈️ AviaTrust Ecosystem</div>
+            <span class="plane-icon">✈</span>
+            <h1>COMAC C929 — <span class="highlight">¥C929</span> The Horizon Asset</h1>
+            <p>
+                The COMAC C929 — <strong>first flight ~2030</strong>, <strong>commercial ~2035</strong>, <strong>5000+ parts</strong>.
+                Aircraft sales, leasing, parts trading — the long-term bet of AviaTrust.
+            </p>
+            <div class="hero-stats">
+                <div class="stat"><span class="stat-number counter-visitors">2030</span><span class="stat-label">First Flight</span></div>
+                <div class="stat"><span class="stat-number counter-holders">2035</span><span class="stat-label">Commercial</span></div>
+                <div class="stat"><span class="stat-number counter-clients">5000+</span><span class="stat-label">Parts</span></div>
+                <div class="stat"><span class="stat-number">¥0.01</span><span class="stat-label">Price</span></div>
+            </div>
+            <div class="hero-actions">
+                <a href="buy.html" class="btn-primary">Buy ¥C929</a>
+                <a href="https://jup.ag/swap/SOL-C929ContractAddressHere" target="_blank" class="btn-outline">Jupiter</a>
+                <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank" class="btn-glass">Solscan</a>
+            </div>
+            <div class="contract-hero">
+                <span class="label">📜 Contract:</span>
+                <span class="addr">C929ContractAddressHere</span>
+                <button onclick="navigator.clipboard.writeText('C929ContractAddressHere')" class="copy-btn">📋 Copy</button>
+                <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank" class="solscan-link">🔍 Solscan</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <img src="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" alt="COMAC C929" class="hero-coin" />
+        </div>
+    </div>
+</section>
+
+<section class="video-section" id="promo-video">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Watch</span>
+            <h2>How to Buy <span class="highlight">¥C929</span></h2>
+            <p>Jupiter, Meteora, and OpenSea — three ways to get ¥C929.</p>
+        </div>
+        <div class="video-wrapper">
+            <video controls autoplay muted loop playsinline poster="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png">
+                <source src="c929_promo_video.mp4" type="video/mp4">
+                Your browser does not support video.
+            </video>
+        </div>
+    </div>
+</section>
+
+<section id="buy">
+    <div class="container">
+        <div class="quick-buy glass-card">
+            <h2>Buy <span class="highlight">¥C929</span></h2>
+            <p class="sub">Choose an amount and pay with card, SWIFT, SEPA, or crypto</p>
+            <div class="buy-amount-grid">
+                <button class="buy-amount-btn" data-usd="5">$5 <small>500 C929</small></button>
+                <button class="buy-amount-btn" data-usd="10">$10 <small>1,000 C929</small></button>
+                <button class="buy-amount-btn" data-usd="25">$25 <small>2,500 C929</small></button>
+                <button class="buy-amount-btn active" data-usd="50">$50 <small>5,000 C929</small></button>
+            </div>
+            <div class="buy-custom-row">
+                <input type="number" id="customAmount" placeholder="Enter amount in $" min="1" step="1" />
+                <button class="btn-primary" id="setCustomBtn" style="padding: 10px 18px; font-size: 14px;">Apply</button>
+            </div>
+            <div class="buy-total">
+                You get: <strong id="totalC929">5,000</strong> <span style="color:#E5486A;">C929</span>
+                &nbsp;·&nbsp; Price: <span id="displayPrice">¥0.01</span>
+                &nbsp;·&nbsp; Contract: <span style="font-family:monospace; font-size:11px; color:#E5486A;">C929ContractAddressHere</span>
+            </div>
+            <div class="buy-links-grid">
+                <a href="https://jup.ag/swap/SOL-C929ContractAddressHere" target="_blank"><span class="icon">🔄</span> Jupiter</a>
+                <a href="https://opensea.io/token/solana/C929ContractAddressHere" target="_blank"><span class="icon">🖼️</span> OpenSea</a>
+                <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank"><span class="icon">🔍</span> Solscan</a>
+                <a href="buy.html" style="grid-column: span 4; background: rgba(229,72,106,0.12); border-color: #E5486A; color: #E5486A;"><span class="icon">💳</span> More Buy Options →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="about">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">About</span>
+            <h2>What is <span class="highlight">¥C929</span>?</h2>
+            <p>The COMAC C929 — the horizon asset of the AviaTrust ecosystem.</p>
+        </div>
+        <div class="about-grid">
+            <div class="about-card glass-card"><div class="about-icon">✈️</div><h3>Horizon</h3><p>First flight ~2030, commercial service ~2035.</p></div>
+            <div class="about-card glass-card"><div class="about-icon">🔧</div><h3>5000+ Parts</h3><p>CJ-2000 engine, composite airframe — global parts pool.</p></div>
+            <div class="about-card glass-card"><div class="about-icon">💳</div><h3>Aircraft Sales</h3><p>Tokenized aircraft sales &amp; leasing rights on-chain.</p></div>
+            <div class="about-card glass-card"><div class="about-icon">🌍</div><h3>Payment Rails</h3><p>SWIFT, SEPA, POS, CIPS, Fedwire, CHIPS, BUNA, UPI, PIX, NPP.</p></div>
+        </div>
+        <div class="image-block">
+            <img src="c929_chart.png" alt="COMAC C929 Tokenomics Chart" />
+        </div>
+    </div>
+</section>
+
+<section id="fintech">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Aircraft Sales • Leasing • Parts</span>
+            <h2>Powerful <span class="highlight">Fintech</span></h2>
+        </div>
+        <div class="image-block">
+            <img src="c929_fintech_diagram.png" alt="COMAC C929 Fintech Diagram" />
+        </div>
+        <div class="rwa-grid">
+            <div class="rwa-card glass-card"><div class="rwa-icon">💺</div><h4>Aircraft Sales</h4><p>Buy, sell, and trade C929 aircraft rights — long-term bet.</p></div>
+            <div class="rwa-card glass-card"><div class="rwa-icon">✈️</div><h4>Aircraft Leasing</h4><p>Future leasing market for the C929 fleet.</p></div>
+            <div class="rwa-card glass-card"><div class="rwa-icon">🔧</div><h4>5000+ Parts</h4><p>CJ-2000 / composite — future parts marketplace.</p></div>
+            <div class="rwa-card glass-card"><div class="rwa-icon">📋</div><h4>Service History</h4><p>Tokenized logbook for each future airframe.</p></div>
+        </div>
+        <div style="text-align:center; margin-top:16px;">
+            <a href="fintech2.html" class="btn-secondary">Explore Fintech →</a>
+        </div>
+    </div>
+</section>
+
+<div class="ticker ticker-bottom">
+    <div class="ticker-track">
+        <span>✈️ <span class="highlight-ticker">COMAC C929 = ¥0.01</span> • 100× to ¥1.00</span>
+        <span>✦ Contract: <span class="contract-ticker">C929ContractAddressHere</span></span>
+        <span>✦ Aircraft Sales • Leasing • 5000+ Parts</span>
+        <span>✦ Solana — 65,000 TPS</span>
+        <span>✦ SWIFT • SEPA • POS • CIPS • UPI • PIX</span>
+        <span>✦ 365 Days Liquidity Lock</span>
+        <span>✈️ <span class="highlight-ticker">COMAC C929 = ¥0.01</span> • 100× to ¥1.00</span>
+        <span>✦ Contract: <span class="contract-ticker">C929ContractAddressHere</span></span>
+        <span>✦ Aircraft Sales • Leasing • 5000+ Parts</span>
+        <span>✦ Solana — 65,000 TPS</span>
+        <span>✦ SWIFT • SEPA • POS • CIPS • UPI • PIX</span>
+        <span>✦ 365 Days Liquidity Lock</span>
+    </div>
+</div>
+
+<footer>
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <img src="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" alt="COMAC C929" />
+            <span class="logo-text">COMAC C929</span>
+            <p>COMAC C929 (¥C929) — The Horizon Asset</p>
+        </div>
+        <div class="footer-links">
+            <a href="https://123tokens.github.io/aviatrust/">AviaTrust</a>
+            <a href="index.html">¥C929</a>
+            <a href="fintech1.html">Fintech</a>
+            <a href="ecosystem.html">Ecosystem</a>
+        </div>
+        <div class="footer-social">
+            <a href="https://opensea.io/token/solana/C929ContractAddressHere" target="_blank">🖼️ OpenSea</a>
+            <a href="https://x.com/aviatrust" target="_blank">🐦 X</a>
+            <a href="https://t.me/aviatrust" target="_blank">📱 TG</a>
+        </div>
+    </div>
+
+    <div class="footer-counter">
+        ✈️ First Flight: <span class="counter-visitors">2030</span>
+        &nbsp;·&nbsp;
+        📦 Commercial: <span class="counter-holders">2035</span>
+        &nbsp;·&nbsp;
+        🔧 Parts: <span class="counter-clients">5000+</span>
+        <br />
+        <span class="time counter-visitor-time">Updated: —</span>
+    </div>
+
+    <div class="footer-contract">
+        📜 Contract: <span class="addr">C929ContractAddressHere</span>
+        <button onclick="navigator.clipboard.writeText('C929ContractAddressHere')" class="copy-btn">📋 Copy</button>
+        <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank" class="solscan-link">🔍 Solscan</a>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 AviaTrust. Built on Solana. | The Horizon Asset. ✈️</p>
+    </div>
+</footer>
+
+<script>
+    document.querySelectorAll('.ticker-track').forEach(track => {
+        const content = track.innerHTML;
+        track.innerHTML = content + content + content;
+    });
+
+    const price = 0.01;
+    const priceEl = document.getElementById('displayPrice');
+    const totalEl = document.getElementById('totalC929');
+    const customInput = document.getElementById('customAmount');
+    const setCustomBtn = document.getElementById('setCustomBtn');
+
+    setInterval(() => {
+        const change = (Math.random() - 0.5) * 0.0005;
+        const newPrice = Math.max(0.009, Math.min(0.011, price + change));
+        priceEl.textContent = '¥' + newPrice.toFixed(4);
+    }, 3000);
+
+    const amountBtns = document.querySelectorAll('.buy-amount-btn');
+    amountBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            amountBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            const usd = parseFloat(this.dataset.usd);
+            updateTotal(usd);
+        });
+    });
+
+    setCustomBtn.addEventListener('click', function() {
+        const val = parseFloat(customInput.value);
+        if (val && val > 0) {
+            amountBtns.forEach(b => b.classList.remove('active'));
+            updateTotal(val);
+        } else {
+            alert('Enter a valid amount (e.g. 15)');
+        }
+    });
+
+    customInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') setCustomBtn.click();
+    });
+
+    function updateTotal(usd) {
+        const c929Amount = Math.floor(usd / price);
+        totalEl.textContent = c929Amount.toLocaleString();
+    }
+
+    updateTotal(50);
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                const offset = 160;
+                const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                window.scrollTo({ top, behavior: 'smooth' });
+            }
+        });
+    });
+</script>
+
+<script src="counter.js"></script>
+
+</body>
+</html>
