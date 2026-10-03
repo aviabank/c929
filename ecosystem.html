@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>COMAC C929 (¥C929) — AviaTrust Ecosystem</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0A0E27; color: #E0E6FF;
+            line-height: 1.6; padding-top: 80px; padding-bottom: 60px;
+        }
+        .container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+        .glass-card {
+            background: rgba(26, 30, 65, 0.6); backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05); border-radius: 24px;
+            padding: 40px; margin-bottom: 24px;
+        }
+        .glass-card h1 { font-size: 32px; margin-bottom: 8px; }
+        .glass-card h1 .highlight { color: #E5486A; }
+        .glass-card .sub { color: #8A94C8; margin-bottom: 24px; }
+        .image-block { max-width: 100%; margin: 30px auto; text-align: center; }
+        .image-block img {
+            max-width: 100%; border-radius: 20px;
+            border: 1px solid #1E2350;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .token-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+        .token-card {
+            background: rgba(26,30,65,0.3); border: 1px solid #1E2350;
+            border-radius: 16px; padding: 20px 16px; text-align: center;
+        }
+        .token-card .symbol { font-size: 24px; font-weight: 700; }
+        .token-card .price { font-size: 16px; color: #fff; margin-top: 4px; }
+        .token-card .desc { font-size: 12px; color: #5A649A; margin-top: 4px; }
+        .token-card .contract { font-size: 9px; font-family: 'Courier New', monospace; color: #E5486A; margin-top: 6px; word-break: break-all; }
+        .token-card.b787 { border-color: rgba(143,175,63,0.5); }
+        .token-card.a350 { border-color: rgba(181,123,255,0.5); }
+        .token-card.c929 { border-color: rgba(229,72,106,0.7); }
+        .token-card.il96 { border-color: rgba(160,160,160,0.3); opacity: 0.6; }
+        .token-card.a220 { border-color: rgba(46,204,64,0.5); }
+        .token-card.e195 { border-color: rgba(255,165,0,0.5); }
+        .contract-box {
+            background: rgba(229,72,106,0.05); border: 1px solid rgba(229,72,106,0.15);
+            border-radius: 12px; padding: 16px; margin: 20px 0;
+            text-align: center; font-size: 13px; color: #8A94C8; font-family: 'Courier New', monospace;
+        }
+        .contract-box .addr { color: #E5486A; }
+        .contract-box .copy-btn { background: transparent; border: none; color: #5A649A; cursor: pointer; font-size: 13px; font-family: 'Segoe UI', sans-serif; }
+        .contract-box .copy-btn:hover { color: #E5486A; }
+        .contract-box .solscan-link { color: #5A649A; text-decoration: none; font-size: 13px; font-family: 'Segoe UI', sans-serif; margin-left: 8px; }
+        .contract-box .solscan-link:hover { color: #fff; }
+        .counter-box {
+            text-align: center; padding: 16px;
+            background: rgba(229,72,106,0.05); border-radius: 12px;
+            margin: 20px 0; font-size: 14px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .counter-box .counter-visitors { color: #E5486A; font-weight: 600; }
+        .counter-box .counter-holders { color: #2ECC40; font-weight: 600; }
+        .counter-box .counter-clients { color: #4A8CFF; font-weight: 600; }
+        .back-link { display: inline-block; margin-top: 20px; color: #E5486A; text-decoration: none; font-weight: 500; }
+        .back-link:hover { text-decoration: underline; }
+        .logo-img { height: 60px; width: auto; margin-bottom: 20px; border-radius: 50%; }
+        @media (max-width: 800px) {
+            .token-row { grid-template-columns: 1fr 1fr; }
+            .glass-card { padding: 24px; }
+            .contract-box { font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="glass-card">
+        <img src="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" alt="COMAC C929" class="logo-img" />
+        <h1>AviaTrust <span class="highlight">Ecosystem</span></h1>
+        <p class="sub">Aircraft tokens, each a unit of the AviaTrust financial layer.</p>
+
+        <div class="image-block">
+            <img src="c929_ecosystem_map.png" alt="AviaTrust Ecosystem Map" />
+        </div>
+
+        <div class="token-row">
+            <div class="token-card b787">
+                <div class="symbol">$B787</div>
+                <div class="price">$0.01</div>
+                <div class="desc">Proven Asset</div>
+                <div class="contract">B787ContractAddressHere</div>
+            </div>
+            <div class="token-card a350">
+                <div class="symbol">€A350</div>
+                <div class="price">€0.01</div>
+                <div class="desc">Innovation Asset</div>
+                <div class="contract">BZ97n4QCfbnMTBy4yEycdkDr4tsfSrYev5KDDwZ4qJrn</div>
+            </div>
+            <div class="token-card c929">
+                <div class="symbol">¥C929</div>
+                <div class="price">¥0.01</div>
+                <div class="desc">Horizon Asset</div>
+                <div class="contract">C929ContractAddressHere</div>
+            </div>
+            <div class="token-card a220">
+                <div class="symbol">€A220</div>
+                <div class="price">€0.01</div>
+                <div class="desc">New Mass Asset</div>
+                <div class="contract">A220ContractAddressHere</div>
+            </div>
+            <div class="token-card e195">
+                <div class="symbol">R$E195</div>
+                <div class="price">R$0.01</div>
+                <div class="desc">Efficiency Asset</div>
+                <div class="contract">E195ContractAddressHere</div>
+            </div>
+            <div class="token-card il96">
+                <div class="symbol">₽IL96</div>
+                <div class="price">—</div>
+                <div class="desc">Frozen (2030)</div>
+                <div class="contract">Frozen</div>
+            </div>
+        </div>
+
+        <div class="counter-box">
+            ✈️ <span class="counter-visitors">2030</span> first flight
+            &nbsp;·&nbsp;
+            📦 <span class="counter-holders">2035</span> commercial
+            &nbsp;·&nbsp;
+            🔧 <span class="counter-clients">5000+</span> parts
+        </div>
+
+        <div class="contract-box">
+            📜 Contract: <span class="addr">C929ContractAddressHere</span>
+            <button onclick="navigator.clipboard.writeText('C929ContractAddressHere')" class="copy-btn">📋 Copy</button>
+            <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank" class="solscan-link">🔍 Solscan</a>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to COMAC C929 Home</a>
+    </div>
+</div>
+
+<script src="counter.js"></script>
+
+</body>
+</html>
