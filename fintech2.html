@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>COMAC C929 (¥C929) — Aircraft Sales • Leasing • 5000+ Parts</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #0A0E27; color: #E0E6FF;
+            line-height: 1.6; padding-top: 80px; padding-bottom: 60px;
+        }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        header {
+            position: fixed; top: 0; left: 0; width: 100%;
+            background: rgba(10,14,39,0.92); backdrop-filter: blur(12px);
+            z-index: 100; border-bottom: 1px solid rgba(229,72,106,0.2);
+            padding: 10px 0;
+        }
+        .header-inner {
+            display: flex; align-items: center; justify-content: space-between;
+            flex-wrap: wrap; gap: 10px;
+        }
+        .logo { display: flex; align-items: center; gap: 8px; }
+        .logo img { height: 36px; width: auto; border-radius: 50%; }
+        .logo-text { font-size: 20px; font-weight: 700; color: #fff; }
+        nav { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+        nav a { color: #8A94C8; text-decoration: none; font-size: 12px; font-weight: 500; transition: 0.3s; }
+        nav a:hover { color: #E5486A; }
+        nav a.active { color: #E5486A; border-bottom: 2px solid #E5486A; }
+        .btn-primary {
+            background: #E5486A; color: #0A0E27; padding: 6px 18px;
+            border-radius: 30px; font-weight: 700; text-decoration: none;
+            transition: 0.3s; display: inline-block; font-size: 13px;
+        }
+        .btn-primary:hover { background: #F06585; transform: scale(1.02); }
+        .btn-secondary {
+            background: transparent; color: #E5486A; padding: 6px 18px;
+            border-radius: 30px; font-weight: 600; text-decoration: none;
+            border: 1px solid #E5486A; transition: 0.3s; display: inline-block;
+            font-size: 13px;
+        }
+        .btn-secondary:hover { background: #E5486A; color: #0A0E27; }
+        section { padding: 30px 0; }
+        .section-header { text-align: center; margin-bottom: 30px; }
+        .section-tag {
+            display: inline-block; background: rgba(229,72,106,0.12);
+            color: #E5486A; padding: 4px 16px; border-radius: 20px;
+            font-size: 12px; font-weight: 600; text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .section-header h1 { font-size: 34px; font-weight: 700; margin: 8px 0; }
+        .section-header h1 .highlight { color: #E5486A; }
+        .section-header p { color: #8A94C8; max-width: 600px; margin: 0 auto; }
+        .rwa-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px; margin-bottom: 24px;
+        }
+        .rwa-card {
+            background: rgba(26,30,65,0.4); border: 1px solid #1E2350;
+            border-radius: 16px; padding: 24px 22px; transition: 0.3s;
+        }
+        .rwa-card:hover { border-color: #E5486A; transform: translateY(-4px); }
+        .rwa-card .rwa-icon { font-size: 38px; margin-bottom: 10px; }
+        .rwa-card h3 { color: #fff; font-size: 19px; margin-bottom: 6px; }
+        .rwa-card p { color: #8A94C8; font-size: 14px; }
+        .feature-badge {
+            display: inline-block; background: rgba(229,72,106,0.15);
+            color: #E5486A; padding: 2px 12px; border-radius: 20px;
+            font-size: 11px; font-weight: 600; text-transform: uppercase;
+            margin-top: 8px; margin-right: 4px;
+        }
+        .image-block { max-width: 900px; margin: 30px auto; text-align: center; }
+        .image-block img {
+            max-width: 100%; border-radius: 20px;
+            border: 1px solid #1E2350;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+        .contract-box {
+            background: rgba(229,72,106,0.05); border: 1px solid rgba(229,72,106,0.15);
+            border-radius: 12px; padding: 14px 16px; margin: 20px 0;
+            text-align: center; font-size: 13px; color: #8A94C8; font-family: 'Courier New', monospace;
+        }
+        .contract-box .addr { color: #E5486A; }
+        .contract-box .copy-btn { background: transparent; border: none; color: #5A649A; cursor: pointer; font-size: 13px; font-family: 'Segoe UI', sans-serif; }
+        .contract-box .copy-btn:hover { color: #E5486A; }
+        .contract-box .solscan-link { color: #5A649A; text-decoration: none; font-size: 13px; font-family: 'Segoe UI', sans-serif; margin-left: 8px; }
+        .contract-box .solscan-link:hover { color: #fff; }
+        .counter-box {
+            text-align: center; padding: 16px;
+            background: rgba(229,72,106,0.05); border-radius: 12px;
+            margin: 20px 0; font-size: 14px; color: #8A94C8;
+            font-family: 'Courier New', monospace;
+        }
+        .counter-box .counter-visitors { color: #E5486A; font-weight: 600; }
+        .counter-box .counter-holders { color: #2ECC40; font-weight: 600; }
+        .counter-box .counter-clients { color: #4A8CFF; font-weight: 600; }
+        .back-link { display: inline-block; margin-top: 16px; color: #E5486A; text-decoration: none; font-weight: 500; }
+        .back-link:hover { text-decoration: underline; }
+        footer {
+            background: #060920; padding: 20px 0 16px; text-align: center;
+            border-top: 1px solid #1E2350; margin-top: 20px;
+        }
+        footer p { color: #3A406A; font-size: 13px; }
+        @media (max-width: 768px) {
+            .header-inner { flex-direction: column; align-items: stretch; }
+            nav { justify-content: center; gap: 6px; }
+            nav a { font-size: 10px; }
+            .section-header h1 { font-size: 26px; }
+            .contract-box { font-size: 11px; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            <img src="https://raw.githubusercontent.com/123tokens/b787/refs/heads/main/c929_logo.png" alt="COMAC C929" />
+            <span class="logo-text">COMAC C929 ¥C929</span>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="fintech1.html">Use Cases</a>
+            <a href="fintech2.html" class="active">Leasing • Parts</a>
+            <a href="trade.html">Trade</a>
+            <a href="ecosystem.html">Ecosystem</a>
+            <a href="https://123tokens.github.io/aviatrust/">AviaTrust</a>
+        </nav>
+        <a href="buy.html" class="btn-primary">Buy ¥C929</a>
+    </div>
+</header>
+
+<section>
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag">Aircraft Sales • Leasing • Parts</span>
+            <h1>Powerful <span class="highlight">Fintech Infrastructure</span></h1>
+            <p>¥C929 is the gateway to future aircraft sales, leasing, 5000+ parts, and global payment rails.</p>
+        </div>
+
+        <div class="image-block">
+            <img src="c929_fintech_diagram.png" alt="COMAC C929 Fintech Diagram" />
+        </div>
+
+        <div class="rwa-grid">
+            <div class="rwa-card">
+                <div class="rwa-icon">💺</div>
+                <h3>Aircraft Sales</h3>
+                <p>Tokenized aircraft sales — buy, sell, and trade COMAC C929 rights on Solana. Projected new list price ~$290M, expected commercial entry ~2035. Pre-order and future delivery tracking on-chain.</p>
+                <span class="feature-badge">~$290M New</span>
+                <span class="feature-badge">~$140M Used</span>
+                <span class="feature-badge">Pre-order</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">✈️</div>
+                <h3>Aircraft Leasing</h3>
+                <p>¥C929 is the unit of account for future C929 leasing rights. The C929 will compete with the 787 and A350 in the long-haul widebody market. €A350 and $B787 prove the model; ¥C929 extends it into the future.</p>
+                <span class="feature-badge">Future Market</span>
+                <span class="feature-badge">Leasing</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">🔧</div>
+                <h3>5000+ Aircraft Parts</h3>
+                <p>The C929 will use the Chinese-developed CJ-2000 engine and composite airframe. ¥C929 represents claims on 5000+ future components: engines, landing gear, avionics, interiors, AOG parts.</p>
+                <span class="feature-badge">CJ-2000 2000+</span>
+                <span class="feature-badge">Composite 1500+</span>
+                <span class="feature-badge">Landing 400+</span>
+                <span class="feature-badge">AOG</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">📋</div>
+                <h3>Service History</h3>
+                <p>When the C929 enters service (~2035), it will require unique maintenance cycles. ¥C929 can carry service history — a tokenized logbook for each future airframe.</p>
+                <span class="feature-badge">Logbook</span>
+                <span class="feature-badge">Future C/D-check</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">🗺️</div>
+                <h3>Route Economics</h3>
+                <p>The C929 will open new long-haul routes, especially on China–Europe and China–Americas corridors. ¥C929 tracks the value generated by these future routes.</p>
+                <span class="feature-badge">CN-EU</span>
+                <span class="feature-badge">CN-AM</span>
+            </div>
+
+            <div class="rwa-card">
+                <div class="rwa-icon">💳</div>
+                <h3>Global Payment Rails</h3>
+                <p>SWIFT, SEPA, POS, CIPS, Fedwire, CHIPS, BUNA, UPI, PIX, NPP — ¥C929 connects them all for future aircraft, parts, and leasing settlement.</p>
+                <span class="feature-badge">SWIFT</span>
+                <span class="feature-badge">CIPS</span>
+                <span class="feature-badge">UPI</span>
+                <span class="feature-badge">PIX</span>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 16px;">
+            <a href="fintech1.html" class="btn-secondary">← Back to Use Cases</a>
+        </div>
+
+        <div class="counter-box">
+            ✈️ <span class="counter-visitors">2030</span> first flight
+            &nbsp;·&nbsp;
+            📦 <span class="counter-holders">2035</span> commercial
+            &nbsp;·&nbsp;
+            🔧 <span class="counter-clients">5000+</span> parts
+        </div>
+
+        <div class="contract-box">
+            📜 Contract: <span class="addr">C929ContractAddressHere</span>
+            <button onclick="navigator.clipboard.writeText('C929ContractAddressHere')" class="copy-btn">📋 Copy</button>
+            <a href="https://solscan.io/token/C929ContractAddressHere" target="_blank" class="solscan-link">🔍 Solscan</a>
+        </div>
+
+        <a href="index.html" class="back-link">← Back to COMAC C929 Home</a>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        <p>© 2026 AviaTrust. Built on Solana. | Contract: C929ContractAddressHere</p>
+    </div>
+</footer>
+
+<script src="counter.js"></script>
+
+</body>
+</html>
